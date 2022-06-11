@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "917768481354",
+    "project_id": "child-fin-ar-app-83bb7",
+    "storage_bucket": "child-fin-ar-app-83bb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917768481354:android:1a8fb02406a53d3e7494b3",
+        "android_client_info": {
+          "package_name": "com.example.childfinarapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "917768481354-t5p0tvdqhfghimejoorq9fk91rba6p9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDr5dKbJ1FnB28x01GipzlMErlJunVw1xE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "917768481354-t5p0tvdqhfghimejoorq9fk91rba6p9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
