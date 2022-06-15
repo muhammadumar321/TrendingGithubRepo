@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
@@ -78,4 +78,13 @@ dependencies {
 
     // paging 3
     implementation "androidx.paging:paging-runtime:$versions.pagingVersion"
+
+    //size
+    implementation "com.intuit.sdp:sdp-android:$versions.sizeVersion"
+
+    //lottie
+    implementation "com.airbnb.android:lottie:$versions.lottieVersion"
+
+    //shimmer
+    implementation "com.facebook.shimmer:shimmer:$versions.shimmerVersion"
 }
