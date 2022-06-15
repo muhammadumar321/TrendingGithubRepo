@@ -7,7 +7,6 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,14 +35,13 @@ class ReposAdapter : PagingDataAdapter<Repo, ReposAdapter.ViewHolder>(REPO_COMPA
             with(holder) {
                 itemView.tag = repo
                 if (repo != null) {
-                    bind(createOnClickListener(binding, repo), repo)
+                    bind(createOnClickListener(repo), repo)
                 }
             }
         }
     }
 
     private fun createOnClickListener(
-        binding: ItemTrendingRepoBinding,
         repo: Repo
     ): View.OnClickListener {
         return View.OnClickListener {
