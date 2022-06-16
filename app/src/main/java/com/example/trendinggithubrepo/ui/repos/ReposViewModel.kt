@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.trendinggithubrepo.data.GithubRepository
+import com.example.trendinggithubrepo.ui.repos.adapter.ReposAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -11,6 +12,6 @@ import javax.inject.Inject
 class ReposViewModel @Inject constructor(
     repository: GithubRepository
 ) : ViewModel() {
-
+    val adapter = ReposAdapter()
     val repos = repository.getReposResults().cachedIn(viewModelScope)
 }

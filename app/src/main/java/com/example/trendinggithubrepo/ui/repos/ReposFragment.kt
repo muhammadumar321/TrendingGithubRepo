@@ -1,10 +1,11 @@
 package com.example.trendinggithubrepo.ui.repos
 
 import android.app.ActionBar
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
+import android.text.Html
+import android.view.*
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import com.example.trendinggithubrepo.R
 import com.example.trendinggithubrepo.databinding.FragmentReposBinding
-import com.example.trendinggithubrepo.ui.repos.adapter.ReposAdapter
 import com.example.trendinggithubrepo.ui.repos.adapter.ReposLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,38 +23,40 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
     private val viewModel by viewModels<ReposViewModel>()
     private var _binding: FragmentReposBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.actionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        activity?.actionBar?.setCustomView(R.layout.custom_actionbar)
-        val p: ActionBar.LayoutParams =
-            ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        p.gravity = Gravity.CENTER
+        activity?.actionBar?.title = Html.fromHtml("<font color=\"black\">" + getString(R.string.app_title) + "</font>")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        setHasOptionsMenu(true)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar?.title = "Trending"
+//        val adapter = ReposAdapter()
 
         _binding = FragmentReposBinding.bind(view)
-
-        val adapter = ReposAdapter()
 
         binding.apply {
 
             recycler.apply {
                 setHasFixedSize(true)
                 itemAnimator = null
-                this.adapter = adapter.withLoadStateHeaderAndFooter(
+                this.adapter = viewModel.adapter.withLoadStateHeaderAndFooter(
                     header = ReposLoadStateAdapter {
-                        adapter.retry() },
+                        viewModel.adapter.retry()
+                    },
                     footer = ReposLoadStateAdapter {
-                        adapter.retry() }
+                        viewModel.adapter.retry()
+                    }
                 )
                 postponeEnterTransition()
                 viewTreeObserver.addOnPreDrawListener {
@@ -64,15 +66,15 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
             }
 
             btnRetry.setOnClickListener {
-                adapter.retry()
+                viewModel.adapter.retry()
             }
         }
 
         viewModel.repos.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+            viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
 
-        adapter.addLoadStateListener { loadState ->
+        viewModel.adapter.addLoadStateListener { loadState ->
             binding.apply {
                 when (loadState.source.refresh) {
                     is LoadState.Loading -> {
@@ -103,7 +105,7 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
                 // no results found
                 if (loadState.source.refresh is LoadState.NotLoading &&
                     loadState.append.endOfPaginationReached &&
-                    adapter.itemCount < 1
+                    viewModel.adapter.itemCount < 1
                 ) {
                     recycler.isVisible = false
                     lavRetry.isVisible = true
@@ -120,4 +122,20 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_refresh -> {
+                viewModel.adapter.refresh()
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 }
