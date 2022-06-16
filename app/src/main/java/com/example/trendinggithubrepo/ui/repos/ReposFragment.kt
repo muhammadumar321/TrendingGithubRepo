@@ -26,7 +26,6 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activity?.actionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         activity?.actionBar?.setCustomView(R.layout.custom_actionbar)
         val p: ActionBar.LayoutParams =

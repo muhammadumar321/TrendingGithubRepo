@@ -42,5 +42,8 @@ ext.versions = [
         lottieVersion              : '3.5.0',
 
         //shimmer
-        shimmerVersion              : '0.1.0@aar'
+        shimmerVersion              : '0.1.0@aar',
+
+        //mockk
+        mockkVersion              : '1.9.3'
 ]

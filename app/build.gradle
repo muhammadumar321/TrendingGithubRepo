@@ -87,4 +87,7 @@ dependencies {
 
     //shimmer
     implementation "com.facebook.shimmer:shimmer:$versions.shimmerVersion"
+
+//    mockk
+    testImplementation "io.mockk:mockk:$versions.mockkVersion"
 }
